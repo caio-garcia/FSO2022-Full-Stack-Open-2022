@@ -7,22 +7,8 @@ const Button = (props) => {
 const StatisticLine = (props) => {
   return (
     <p>
-      {props.text} {props.value}
+      {props.text} {props.value.toFixed(1)}
     </p>
-  );
-};
-
-const Statistics = (props) => {
-  const { good, neutral, bad } = props;
-  return (
-    <div>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-      <p>all {good + bad + neutral}</p>
-      <p>average {(good - bad) / (good + bad + neutral)}</p>
-      <p>positive {(good / (good + bad + neutral)) * 100}%</p>
-    </div>
   );
 };
 
@@ -51,18 +37,41 @@ const App = () => {
           <p>No feedback given</p>
         ) : (
           <div>
-            {/* <Statistics good={good} neutral={neutral} bad={bad} /> */}
-            <StatisticLine text={"good"} value={good} />
-            <StatisticLine text={"neutral"} value={neutral} />
-            <StatisticLine text={"bad"} value={bad} />
-            <StatisticLine
-              text={"average"}
-              value={(good - bad) / (good + bad + neutral)}
-            />
-            <StatisticLine
-              text={"positive"}
-              value={(good / (good + bad + neutral)) * 100 + "%"}
-            />
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <StatisticLine text={"good"} value={good} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <StatisticLine text={"neutral"} value={neutral} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <StatisticLine text={"bad"} value={bad} />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <StatisticLine
+                      text={"average"}
+                      value={(good - bad) / (good + bad + neutral)}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <StatisticLine
+                      text={"positive"}
+                      value={(good / (good + bad + neutral)) * 100}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         )}
       </div>
