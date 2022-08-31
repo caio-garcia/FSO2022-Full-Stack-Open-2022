@@ -6,7 +6,15 @@ const App = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    setPersons([...persons, newName]);
+    if (
+      persons.filter((elem) => {
+        return elem.name === newName.name;
+      }).length > 0
+    ) {
+      window.alert(`${newName.name} already exists!`);
+    } else {
+      setPersons([...persons, newName]);
+    }
   }
 
   function handleChange(e) {
