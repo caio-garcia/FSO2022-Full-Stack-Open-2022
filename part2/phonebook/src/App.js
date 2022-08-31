@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { NewNumber } from "./components/NewNumber";
+import { Numbers } from "./components/Numbers";
+import { SearchBar } from "./components/SearchBar";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -35,39 +38,12 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <SearchBar handleFiltering={handleFiltering} />
       <div>
-        filter shown with <input onChange={handleFiltering} />
+        <NewNumber handleSubmit={handleSubmit} handleChange={handleChange} />
       </div>
-      <form>
-        <h2>Add a new</h2>
-        <div>
-          name: <input name="name" onChange={handleChange} />
-        </div>
-        <div>
-          number: <input name="number" onChange={handleChange} />
-        </div>
-        <div>
-          <button type="submit" onClick={handleSubmit}>
-            add
-          </button>
-        </div>
-      </form>
       <h2>Numbers</h2>
-      <ul>
-        {persons
-          .filter((elem) =>
-            elem.name.toLocaleLowerCase().includes(search.toLowerCase())
-          )
-          .map((curr) => {
-            return (
-              <li key={Math.random()} style={{ listStyle: "none" }}>
-                <p>
-                  {curr.name} {curr.number}
-                </p>
-              </li>
-            );
-          })}
-      </ul>
+      <Numbers persons={persons} search={search} />
     </div>
   );
 };
