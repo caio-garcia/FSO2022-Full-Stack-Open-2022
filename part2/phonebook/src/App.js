@@ -1,4 +1,5 @@
-import axios from "axios";
+import services from "./services/services";
+
 import { useState, useEffect } from "react";
 import { NewNumber } from "./components/NewNumber";
 import { Numbers } from "./components/Numbers";
@@ -11,9 +12,7 @@ const App = () => {
   const [newName, setNewName] = useState("");
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-    });
+    services.getAll().then((firstUpload) => setPersons(firstUpload));
   }, []);
 
   function handleSubmit(e) {
@@ -26,6 +25,7 @@ const App = () => {
       window.alert(`${newName.name} already exists!`);
     } else {
       setPersons([...persons, newName]);
+      services.addOne(newName);
     }
   }
 
