@@ -20,15 +20,19 @@ const App = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (
-      persons.filter((elem) => {
-        return elem.name === newName.name;
-      }).length > 0
-    ) {
-      window.alert(`${newName.name} already exists!`);
+    const fitleredPerson = persons.filter((elem) => {
+      return elem.name === newName.name;
+    });
+    if (fitleredPerson.length > 0) {
+      if (
+        window.confirm(
+          `${newName.name} already exists. Would you like to replace old number with a new one?`
+        )
+      ) {
+        services.updateOne(fitleredPerson[0].id, newName).then(fetchData());
+      }
     } else {
-      setPersons([...persons, newName]);
-      services.addOne(newName);
+      services.addOne(newName).then(fetchData());
     }
   }
 
@@ -46,8 +50,7 @@ const App = () => {
         `${e.target.name} is about to be deleted \nWould you like to delete it?`
       )
     ) {
-      services.deleteOne(e.target.value);
-      fetchData();
+      services.deleteOne(e.target.value).then(fetchData());
     }
   }
 

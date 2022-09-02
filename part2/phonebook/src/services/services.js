@@ -13,7 +13,7 @@ const addOne = (newObject) => {
 };
 
 const updateOne = (id, updatedObject) => {
-  const request = axios.patch(`${baseUrl}/${id}`, updatedObject);
+  const request = axios.put(`${baseUrl}/${id}`, updatedObject);
   return request.then((response) => response.data);
 };
 
