@@ -4,12 +4,17 @@ import { useState, useEffect } from "react";
 import { NewNumber } from "./components/NewNumber";
 import { Numbers } from "./components/Numbers";
 import { SearchBar } from "./components/SearchBar";
+import { Message } from "./components/Message";
+import { type } from "@testing-library/user-event/dist/type";
 
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   const [search, setSearch] = useState("");
   const [newName, setNewName] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [typeMessage, setTypeMessage] = useState("green");
 
   const fetchData = () => {
     services.getAll().then((firstUpload) => setPersons(firstUpload));
@@ -33,6 +38,9 @@ const App = () => {
       }
     } else {
       services.addOne(newName).then(fetchData());
+      setTypeMessage("green");
+      setMessage("Successfully added!");
+      setTimeout(() => setMessage(""), 2000);
     }
   }
 
@@ -50,6 +58,8 @@ const App = () => {
         `${e.target.name} is about to be deleted \nWould you like to delete it?`
       )
     ) {
+      setMessage("Sucessfully deleted!");
+      setTimeout(() => setMessage(""), 2000);
       services.deleteOne(e.target.value).then(fetchData());
     }
   }
@@ -57,6 +67,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Message message={message} messageType={typeMessage} />
       <SearchBar handleFiltering={handleFiltering} />
       <div>
         <NewNumber handleSubmit={handleSubmit} handleChange={handleChange} />
