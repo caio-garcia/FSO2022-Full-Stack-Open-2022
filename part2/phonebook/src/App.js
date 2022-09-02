@@ -11,8 +11,11 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [newName, setNewName] = useState("");
 
-  useEffect(() => {
+  const fetchData = () => {
     services.getAll().then((firstUpload) => setPersons(firstUpload));
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   function handleSubmit(e) {
@@ -37,6 +40,17 @@ const App = () => {
     setNewName({ ...newName, [e.target.name]: e.target.value });
   }
 
+  function deleteRecord(e) {
+    if (
+      window.confirm(
+        `${e.target.name} is about to be deleted \nWould you like to delete it?`
+      )
+    ) {
+      services.deleteOne(e.target.value);
+      fetchData();
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -45,7 +59,7 @@ const App = () => {
         <NewNumber handleSubmit={handleSubmit} handleChange={handleChange} />
       </div>
       <h2>Numbers</h2>
-      <Numbers persons={persons} search={search} />
+      <Numbers persons={persons} search={search} deleteRecord={deleteRecord} />
     </div>
   );
 };

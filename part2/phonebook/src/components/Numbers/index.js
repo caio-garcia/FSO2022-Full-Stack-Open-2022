@@ -1,4 +1,4 @@
-export function Numbers({ persons, search }) {
+export function Numbers({ persons, search, deleteRecord }) {
   return (
     <ul>
       {persons
@@ -11,6 +11,9 @@ export function Numbers({ persons, search }) {
               <p>
                 {curr.name} {curr.number}
               </p>
+              <button value={curr.id} name={curr.name} onClick={deleteRecord}>
+                delete
+              </button>
             </li>
           );
         })}
